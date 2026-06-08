@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model Slider {
+  id         String @id @default(cuid())
+  title      String
+  subtitle   String?
+  btnText    String?
+  btnLink    String?
+  bgGradient String?
+  order      Int    @default(0)
+}
+
+model Service {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  order       Int    @default(0)
+}
+
+model Solution {
+  id       String @id @default(cuid())
+  title    String
+  category String
+  items    String
+  order    Int    @default(0)
+}
+
+model Blog {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  body      String
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  role     String @default("ADMIN")
+}
