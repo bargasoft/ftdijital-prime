@@ -15,9 +15,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Pinning and hovering state
+  const [isPinned, setIsPinned] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Exact icons from the cropped screenshot
+  // It is expanded if pinned or hovered
+  const isExpanded = isPinned || isHovered;
+
   const navItems = [
     { name: 'Özet', href: '/dashboard', icon: LayoutDashboard }, 
     { name: 'Slider', href: '/dashboard/slider', icon: Box }, 
@@ -30,7 +34,7 @@ export default function DashboardLayout({
   return (
     <div className={styles.layout}>
       
-      {/* Dark Topbar (Spans full width behind sidebar) */}
+      {/* Dark Topbar */}
       <header className={styles.topbar}>
         <div className={styles.searchBar}>
           <Search size={16} className={styles.searchIcon} />
@@ -63,17 +67,21 @@ export default function DashboardLayout({
       </header>
 
       {/* Floating Pill Sidebar */}
-      <aside className={`${styles.sidebar} ${isExpanded ? styles.sidebarExpanded : styles.sidebarCollapsed}`}>
+      <aside 
+        className={`${styles.sidebar} ${isExpanded ? styles.sidebarExpanded : styles.sidebarCollapsed}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         
-        <div className={styles.sidebarToggle} onClick={() => setIsExpanded(!isExpanded)}>
-          {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+        <div className={styles.sidebarToggle} onClick={() => setIsPinned(!isPinned)}>
+          {isPinned ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
         </div>
 
         <div className={styles.sidebarLogo}>
           {isExpanded ? (
-             <div style={{fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-1px'}}>ticimax</div>
+             <div style={{fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-1px'}}>FT Dijital</div>
           ) : (
-             <div>X<span style={{fontSize: '1rem', fontWeight: 500}}>®</span></div>
+             <div style={{fontWeight: 900, fontSize: '1.2rem'}}>FT</div>
           )}
         </div>
 
@@ -83,16 +91,18 @@ export default function DashboardLayout({
             const Icon = item.icon;
             return (
               <Link key={item.name} href={item.href} className={isActive ? styles.navItemActive : styles.navItem}>
-                <Icon size={20} strokeWidth={isActive ? 2 : 1.5} />
+                <div className={styles.navIcon}>
+                  <Icon size={20} strokeWidth={isActive ? 2 : 1.5} />
+                </div>
                 {isExpanded && <span className={styles.navText}>{item.name}</span>}
               </Link>
             );
           })}
         </nav>
 
-        {/* User Profile Area matches crop exactly */}
+        {/* User Profile Area */}
         <div className={styles.userProfileBottom}>
-          <div className={styles.userAvatar}>HS</div>
+          <div className={styles.userAvatar}>FT</div>
           {!isExpanded && (
             <>
               <User size={18} className={styles.bottomIcon} strokeWidth={1.5} />
@@ -103,8 +113,8 @@ export default function DashboardLayout({
             </>
           )}
           {isExpanded && (
-            <div style={{fontSize: '0.8rem', textAlign: 'center'}}>
-               Hüseyin Silahlı<br/><span style={{color: '#64748b', fontSize: '0.7rem'}}>Çıkış</span>
+            <div style={{fontSize: '0.85rem', textAlign: 'left', width: '100%', paddingLeft: '1rem'}}>
+               FT Dijital Admin<br/><span style={{color: '#64748b', fontSize: '0.75rem', cursor: 'pointer'}}>Çıkış Yap</span>
             </div>
           )}
         </div>

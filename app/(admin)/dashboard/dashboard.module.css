@@ -82,7 +82,6 @@
   border-radius: 35px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   z-index: 30;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,13 +90,12 @@
 
 .sidebarCollapsed {
   width: 70px;
+  align-items: center;
 }
 
 .sidebarExpanded {
   width: 260px;
-  align-items: flex-start;
-  padding: 2.5rem 1.5rem;
-  border-radius: 20px;
+  align-items: stretch; /* So children can stretch full width */
 }
 
 /* Toggle Button */
@@ -123,13 +121,17 @@
 .sidebarLogo {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 2rem;
   color: #0f172a;
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -2px;
+}
+
+.sidebarCollapsed .sidebarLogo {
+  justify-content: center;
+}
+
+.sidebarExpanded .sidebarLogo {
+  justify-content: flex-start;
+  padding-left: 2rem;
 }
 
 /* Nav Icons */
@@ -140,7 +142,7 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  gap: 1.5rem;
+  gap: 0.5rem;
 }
 
 .nav::-webkit-scrollbar {
@@ -153,24 +155,57 @@
 .navItem {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   color: #64748b;
   text-decoration: none;
+  height: 48px;
+  transition: all 0.2s;
 }
 
 .navItemActive {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   color: #3b82f6;
   text-decoration: none;
+  height: 48px;
+}
+
+.sidebarCollapsed .navItem,
+.sidebarCollapsed .navItemActive {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebarExpanded .navItem,
+.sidebarExpanded .navItemActive {
+  justify-content: flex-start;
+  padding-left: 2rem;
+}
+
+.navItem:hover {
+  color: #3b82f6;
+  background: #f8fafc;
+}
+
+.navItemActive {
+  color: #2563eb;
+  background: #eff6ff;
+  border-right: 3px solid #2563eb;
+}
+
+.sidebarCollapsed .navItemActive {
+  border-right: none;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
 }
 
 .navText {
   margin-left: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
@@ -178,9 +213,22 @@
 .userProfileBottom {
   display: flex;
   flex-direction: column;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.sidebarCollapsed .userProfileBottom {
   align-items: center;
   gap: 1.25rem;
-  margin-top: 1rem;
+}
+
+.sidebarExpanded .userProfileBottom {
+  align-items: flex-start;
+  flex-direction: row;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  gap: 1rem;
 }
 
 .userAvatar {
@@ -194,6 +242,7 @@
   color: #3b82f6;
   font-weight: 600;
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 .bottomIcon {
