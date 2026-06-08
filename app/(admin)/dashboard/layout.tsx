@@ -45,10 +45,13 @@ export default function DashboardLayout({
       name: 'Web Tasarım', 
       icon: LayoutTemplate,
       children: [
+        { name: 'Sayfa Düzeni', href: '/dashboard/web-design/layout' },
+        { name: 'Header Tasarımı', href: '/dashboard/web-design/header' },
+        { name: 'Footer Tasarımı', href: '/dashboard/web-design/footer' },
         { name: 'Slider', href: '/dashboard/slider' },
-        { name: 'Site Ayarları', href: '/dashboard/settings' },
       ]
-    }
+    },
+    { name: 'Ayarlar', href: '/dashboard/settings', icon: Paintbrush }, 
   ];
 
   return (

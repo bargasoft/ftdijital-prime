@@ -9,28 +9,25 @@ export default async function SettingsPage() {
     <div className={styles.card}>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem'}}>
         <Settings color="#0ea5e9" size={24} />
-        <h2 className={styles.cardHeader} style={{marginBottom: 0}}>Site Genel Ayarları</h2>
+        <h2 className={styles.cardHeader} style={{marginBottom: 0}}>Global Ayarlar & Firma Bilgileri</h2>
       </div>
       
       <p style={{color: '#64748b', fontSize: '0.9rem', marginBottom: '2rem'}}>
-        Buradan yaptığınız değişiklikler doğrudan web sitenizin ön yüzündeki (ziyaretçi tarafı) Header ve Footer alanlarına yansır.
+        Kurumsal kimlik bilgilerinizi, sistem ayarlarınızı ve iletişim kanallarınızı buradan yönetebilirsiniz. 
+        Web tasarımı ve arayüz bu verileri otomatik olarak okuyacaktır.
       </p>
 
       <form action={updateSettings} style={{display: 'flex', flexDirection: 'column', gap: '3rem'}}>
         
-        {/* Tasarım ve Logo */}
+        {/* Kurumsal Bilgiler */}
         <div style={{background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
           <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontWeight: 600, color: '#334155'}}>
-            <Palette size={18} /> Logo & Tasarım Renkleri
+            <Palette size={18} /> Kurumsal Bilgiler
           </div>
           <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem'}}>
-            <div>
-              <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#64748b'}}>Site Logosu Yazısı</label>
+            <div style={{gridColumn: '1 / -1'}}>
+              <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#64748b'}}>Resmi Firma Adı / Logo Yazısı</label>
               <input type="text" name="site_logo" defaultValue={settings.site_logo || 'FT Dijital Prime'} style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1'}} />
-            </div>
-            <div>
-              <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#64748b'}}>Ana Renk (Primary Color)</label>
-              <input type="color" name="primary_color" defaultValue={settings.primary_color || '#0ea5e9'} style={{width: '100%', height: '42px', padding: '0.2rem', borderRadius: '8px', border: '1px solid #cbd5e1', cursor: 'pointer'}} />
             </div>
           </div>
         </div>

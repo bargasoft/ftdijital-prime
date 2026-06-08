@@ -15,11 +15,21 @@ export default async function HomePage() {
   // Sadece son eklenen veya aktif olan slider'ı alıyoruz
   const activeSlider = sliders.length > 0 ? sliders[sliders.length - 1] : null;
 
+  // Sayfa Sürükle Bırak Düzenini Al
+  const layoutSetting = await prisma.setting.findUnique({ where: { key: 'home_layout' } });
+  let homeLayout = ['slider', 'services', 'solutions'];
+  if (layoutSetting) {
+    try {
+      homeLayout = JSON.parse(layoutSetting.value);
+    } catch (e) {}
+  }
+
   return (
     <HomeClient 
       sliderData={activeSlider}
       servicesData={services}
       solutionsData={solutions}
+      homeLayout={homeLayout}
     />
   );
 }

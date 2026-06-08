@@ -21,6 +21,9 @@ export default async function PublicLayout({
       <Header 
         siteLogo={settings.site_logo}
         primaryColor={settings.primary_color}
+        headerLogoAlign={settings.header_logo_align}
+        headerMenuStyle={settings.header_menu_style}
+        headerBgStyle={settings.header_bg_style}
       />
       
       {children}
@@ -33,6 +36,8 @@ export default async function PublicLayout({
         address={settings.contact_address}
         instagram={settings.social_instagram}
         linkedin={settings.social_linkedin}
+        footerTheme={settings.footer_theme}
+        footerColumns={settings.footer_columns}
       />
     </>
   );
