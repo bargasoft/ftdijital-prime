@@ -38,6 +38,7 @@ export default function DashboardLayout({
       children: [
         { name: 'Müşteriler', href: '/dashboard/crm/customers' },
         { name: 'Fırsatlar', href: '/dashboard/crm/deals' },
+        { name: 'Destek Talepleri', href: '/dashboard/crm/support' },
       ]
     },
     { 
