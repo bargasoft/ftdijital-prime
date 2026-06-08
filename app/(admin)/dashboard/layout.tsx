@@ -6,7 +6,7 @@ import styles from './dashboard.module.css';
 import { 
   LayoutDashboard, Images, Briefcase, Layers, Newspaper, Settings, 
   Bot, Store, Globe, HeadphonesIcon, Bell, ChevronRight, ChevronLeft, 
-  LayoutGrid, Sparkles
+  LayoutGrid, Sparkles, Search as SearchIcon
 } from 'lucide-react';
 
 export default function DashboardLayout({
