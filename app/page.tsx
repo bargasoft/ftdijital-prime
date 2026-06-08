@@ -1,43 +1,88 @@
-import prisma from '@/lib/db';
+'use client';
+import { useEffect, useState } from 'react';
 import styles from './public.module.css';
+import { ArrowRight, Code, Database, LineChart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export const revalidate = 0; // Her zaman veritabanından en güncel veriyi çek
+export default function HomePage() {
+  const [sliderData, setSliderData] = useState<{title: string, subtitle: string, btnText: string} | null>(null);
 
-export default async function HomePage() {
-  const sliders = await prisma.slider.findMany({ orderBy: { order: 'asc' } });
-  const activeSlider = sliders.length > 0 ? sliders[sliders.length - 1] : null;
+  useEffect(() => {
+    fetch('/api/slider').then(res => res.json()).then(data => {
+      if (data && data.length > 0) {
+        setSliderData(data[data.length - 1]);
+      }
+    });
+  }, []);
 
   return (
-    <main>
-      {/* Hero Section / Slider - Dinamik Veri */}
+    <main style={{ backgroundColor: '#f8fafc' }}>
+      {/* Hero Section */}
       <section className={styles.hero}>
-        <h1 className={styles.title}>
-          {activeSlider ? activeSlider.title : "Geleceğin İşletmelerini Yeniden İnşa Ediyoruz"}
-        </h1>
-        <p className={styles.subtitle}>
-          {activeSlider?.subtitle || "Logo Yazılım ürünleriyle dijital dönüşümünüzü hızlandırın, küresel standartlarda operasyonel mükemmelliğe ulaşın."}
-        </p>
-        <button className={styles.button}>
-          {activeSlider?.btnText || "Hemen Başlayın"}
-        </button>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
+          <div style={{ marginBottom: '2rem', padding: '0.5rem 1rem', background: 'rgba(14, 165, 233, 0.1)', color: '#0ea5e9', borderRadius: '9999px', fontWeight: '600', fontSize: '0.875rem' }}>
+            ✨ FT Dijital Prime Yayında
+          </div>
+          
+          <h1 className={styles.title}>
+            {sliderData ? sliderData.title : "Geleceğin İşletmelerini Yeniden İnşa Ediyoruz"}
+          </h1>
+          <p className={styles.subtitle}>
+            {sliderData?.subtitle || "Logo Yazılım ürünleriyle dijital dönüşümünüzü hızlandırın, küresel standartlarda operasyonel mükemmelliğe ulaşın."}
+          </p>
+          
+          <div className={styles.buttonGroup}>
+            <button className={styles.primaryButton}>
+              {sliderData?.btnText || "Hemen Başlayın"}
+              <ArrowRight size={20} />
+            </button>
+            <button className={styles.secondaryButton}>
+              Referanslarımızı İnceleyin
+            </button>
+          </div>
+        </motion.div>
       </section>
 
-      {/* Services Section - Statik/Örnek Veri */}
+      {/* Services Section */}
       <section className={styles.servicesSection}>
-        <h2 className={styles.sectionTitle}>Prime Hizmetlerimiz</h2>
+        <motion.h2 
+          className={styles.sectionTitle}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          Prime Hizmetlerimiz
+        </motion.h2>
+        
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <h3 className={styles.cardTitle}>Dijital Dönüşüm Danışmanlığı</h3>
-            <p className={styles.cardDesc}>İş süreçlerinizi modern yazılımlarla entegre ederek verimliliğinizi maksimize ediyoruz. Gelenekselden dijitale köprü kuruyoruz.</p>
-          </div>
-          <div className={styles.card}>
-            <h3 className={styles.cardTitle}>Özel Yazılım Geliştirme</h3>
-            <p className={styles.cardDesc}>Sadece size özel, işletmenizin DNA'sına uygun ölçeklenebilir ve yüksek performanslı yazılımlar tasarlıyoruz.</p>
-          </div>
-          <div className={styles.card}>
+          <motion.div className={styles.card} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+            <div className={styles.iconWrapper}>
+              <LineChart size={32} />
+            </div>
+            <h3 className={styles.cardTitle}>Dijital Dönüşüm</h3>
+            <p className={styles.cardDesc}>İş süreçlerinizi modern yazılımlarla entegre ederek verimliliğinizi maksimize ediyoruz. Gelenekselden dijitale güçlü bir köprü kuruyoruz.</p>
+          </motion.div>
+          
+          <motion.div className={styles.card} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+            <div className={styles.iconWrapper} style={{ color: '#8b5cf6' }}>
+              <Code size={32} />
+            </div>
+            <h3 className={styles.cardTitle}>Özel Yazılım</h3>
+            <p className={styles.cardDesc}>Sadece size özel, işletmenizin DNA'sına tam uygun ölçeklenebilir ve yüksek performanslı modern web mimarileri tasarlıyoruz.</p>
+          </motion.div>
+          
+          <motion.div className={styles.card} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+            <div className={styles.iconWrapper} style={{ color: '#ec4899' }}>
+              <Database size={32} />
+            </div>
             <h3 className={styles.cardTitle}>Logo ERP Çözümleri</h3>
-            <p className={styles.cardDesc}>Logo Tiger, GO ve Netsis ürünlerinin kusursuz kurulumu, optimizasyonu ve desteği ile işletmenizi büyütüyoruz.</p>
-          </div>
+            <p className={styles.cardDesc}>Logo Tiger, GO ve Netsis ürünlerinin kusursuz kurulumu, optimizasyonu ve desteği ile işletmenizin potansiyelini büyütüyoruz.</p>
+          </motion.div>
         </div>
       </section>
     </main>
