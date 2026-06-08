@@ -1,6 +1,5 @@
 .layout {
   display: flex;
-  flex-direction: column;
   height: 100vh;
   background: #f4f5f8;
   color: #334155;
@@ -8,104 +7,47 @@
   overflow: hidden;
 }
 
-.topbar {
-  height: 60px;
-  background: #1e293b;
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 20;
-}
-
-.logo {
-  color: white;
-  font-size: 1.25rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 200px;
-}
-
-.searchBar {
-  flex: 1;
-  max-width: 500px;
-  margin-left: 2rem;
-  position: relative;
-}
-
-.searchIcon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-}
-
-.searchInput {
-  width: 100%;
-  background: #334155;
-  border: 1px solid #475569;
-  border-radius: 6px;
-  padding: 0.5rem 1rem 0.5rem 2.5rem;
-  color: white;
-  outline: none;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-}
-
-.searchInput:focus {
-  background: #0f172a;
-  border-color: #64748b;
-}
-
-.searchInput::placeholder {
-  color: #94a3b8;
-}
-
-.topActions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-left: auto;
-}
-
-.topButton {
-  background: transparent;
-  color: #cbd5e1;
-  border: 1px solid #475569;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.topButton:hover {
-  background: #334155;
-  color: white;
-}
-
-.mainWrapper {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
 .sidebar {
   width: 70px;
+  height: 100vh;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1rem;
-  z-index: 10;
+  padding: 1rem 0;
+  z-index: 30;
+  position: relative;
   transition: width 0.3s;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+}
+
+.sidebarLogo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.sidebarToggle {
+  position: absolute;
+  right: -12px;
+  top: 1.5rem;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #94a3b8;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .nav {
@@ -113,6 +55,7 @@
   flex-direction: column;
   width: 100%;
   gap: 0.25rem;
+  flex: 1;
 }
 
 .navItem {
@@ -144,6 +87,22 @@
   text-decoration: none;
 }
 
+.userProfileBottom {
+  margin-top: auto;
+  width: 40px;
+  height: 40px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+}
+
 /* Tooltip for sidebar */
 .tooltip {
   position: absolute;
@@ -160,7 +119,7 @@
   pointer-events: none;
   transition: opacity 0.2s;
   margin-left: 10px;
-  z-index: 30;
+  z-index: 40;
 }
 
 .tooltip::before {
@@ -176,6 +135,84 @@
 
 .navItem:hover .tooltip, .navItemActive:hover .tooltip {
   opacity: 1;
+}
+
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.topbar {
+  height: 70px;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 20;
+}
+
+.searchBar {
+  flex: 1;
+  max-width: 500px;
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.searchInput {
+  width: 100%;
+  background: #334155;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  color: white;
+  outline: none;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.searchInput:focus {
+  background: #0f172a;
+  border-color: #64748b;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.topButton {
+  background: transparent;
+  color: #cbd5e1;
+  border: 1px solid #475569;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.topButton:hover {
+  background: #334155;
+  color: white;
 }
 
 .main {
