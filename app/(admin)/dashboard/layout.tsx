@@ -6,7 +6,7 @@ import styles from './dashboard.module.css';
 import { 
   LayoutDashboard, Box, Receipt, Sparkles, Users, Paintbrush, 
   Search, ChevronRight, ChevronLeft, User, LogOut, Bot, Store, 
-  Globe, HeadphonesIcon, Bell, LayoutGrid, LayoutTemplate
+  Globe, HeadphonesIcon, Bell, LayoutGrid, LayoutTemplate, Briefcase
 } from 'lucide-react';
 
 export default function DashboardLayout({
@@ -29,6 +29,17 @@ export default function DashboardLayout({
 
   const navItems = [
     { name: 'Özet', href: '/dashboard', icon: LayoutDashboard }, 
+    { name: 'Hizmetler', href: '/dashboard/services', icon: Receipt }, 
+    { name: 'Çözümler', href: '/dashboard/solutions', icon: Sparkles }, 
+    { name: 'Blog', href: '/dashboard/blog', icon: Users }, 
+    { 
+      name: 'CRM', 
+      icon: Briefcase,
+      children: [
+        { name: 'Müşteriler', href: '/dashboard/crm/customers' },
+        { name: 'Fırsatlar', href: '/dashboard/crm/deals' },
+      ]
+    },
     { 
       name: 'Web Tasarım', 
       icon: LayoutTemplate,
@@ -36,9 +47,6 @@ export default function DashboardLayout({
         { name: 'Slider', href: '/dashboard/slider' },
       ]
     },
-    { name: 'Hizmetler', href: '/dashboard/services', icon: Receipt }, 
-    { name: 'Çözümler', href: '/dashboard/solutions', icon: Sparkles }, 
-    { name: 'Blog', href: '/dashboard/blog', icon: Users }, 
     { name: 'Ayarlar', href: '/dashboard/settings', icon: Paintbrush }, 
   ];
 
