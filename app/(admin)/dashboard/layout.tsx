@@ -2,8 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './dashboard.module.css';
-import { LayoutDashboard, Images, Briefcase, Settings, Newspaper, Layers, Bell, Search, Hexagon } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { LayoutDashboard, Images, Briefcase, Settings, Newspaper, Layers, Bell, Search, Hexagon, Store, HeadphonesIcon, Globe } from 'lucide-react';
 
 export default function DashboardLayout({
   children,
@@ -23,67 +22,55 @@ export default function DashboardLayout({
 
   return (
     <div className={styles.layout}>
-      {/* Premium Glassmorphic Sidebar */}
-      <aside className={styles.sidebar}>
+      {/* SaaS Top Header */}
+      <header className={styles.topbar}>
         <div className={styles.logo}>
-          <Hexagon fill="url(#gradient)" strokeWidth={0} size={28} />
+          <Hexagon fill="#3b82f6" strokeWidth={0} size={24} />
           FT Prime
-          <svg width="0" height="0">
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop stopColor="#0ea5e9" offset="0%" />
-              <stop stopColor="#8b5cf6" offset="100%" />
-            </linearGradient>
-          </svg>
         </div>
         
-        <nav className={styles.nav}>
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
-            return (
-              <Link key={item.name} href={item.href} className={isActive ? styles.navItemActive : styles.navItem}>
-                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className={styles.userProfile}>
-          <div className={styles.avatar}>A</div>
-          <div className={styles.userInfo}>
-            <h4>Admin Kullanıcısı</h4>
-            <p>Sistem Yöneticisi</p>
-          </div>
+        <div className={styles.searchBar}>
+          <Search size={16} className={styles.searchIcon} />
+          <input type="text" placeholder="Menü ve Modüllerde Ara" className={styles.searchInput} />
         </div>
-      </aside>
 
-      {/* Main Content Area */}
-      <main className={styles.main}>
-        {/* Topbar */}
-        <header className={styles.topbar}>
-          <div className={styles.searchBar}>
-            <Search size={18} color="#94a3b8" />
-            <input type="text" placeholder="Hızlı arama yapın..." className={styles.searchInput} />
-          </div>
-          <div className={styles.topActions}>
-            <button className={styles.iconButton}>
-              <Bell size={20} />
-            </button>
-          </div>
-        </header>
-
-        {/* Dynamic Page Content with Framer Motion */}
-        <div className={styles.content}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            {children}
-          </motion.div>
+        <div className={styles.topActions}>
+          <button className={styles.topButton}>
+            <Store size={16} /> Uygulama Marketi
+          </button>
+          <button className={styles.topButton}>
+            <Globe size={16} /> Sitede Gör
+          </button>
+          <button className={styles.topButton}>
+            <HeadphonesIcon size={16} /> Destek Merkezi
+          </button>
+          <button className={styles.topButton} style={{border: 'none', padding: '0.4rem'}}>
+            <Bell size={20} />
+          </button>
         </div>
-      </main>
+      </header>
+
+      {/* Main Container with Narrow Sidebar */}
+      <div className={styles.mainWrapper}>
+        <aside className={styles.sidebar}>
+          <nav className={styles.nav}>
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link key={item.name} href={item.href} className={isActive ? styles.navItemActive : styles.navItem}>
+                  <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                  <span className={styles.tooltip}>{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+        </aside>
+
+        <main className={styles.main}>
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
