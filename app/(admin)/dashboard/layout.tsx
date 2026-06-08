@@ -6,7 +6,7 @@ import styles from './dashboard.module.css';
 import { 
   LayoutDashboard, Box, Receipt, Sparkles, Users, Paintbrush, 
   Search, ChevronRight, ChevronLeft, User, LogOut, Bot, Store, 
-  Globe, HeadphonesIcon, Bell, LayoutGrid
+  Globe, HeadphonesIcon, Bell, LayoutGrid, LayoutTemplate
 } from 'lucide-react';
 
 export default function DashboardLayout({
@@ -18,13 +18,24 @@ export default function DashboardLayout({
   // Pinning and hovering state
   const [isPinned, setIsPinned] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   // It is expanded if pinned or hovered
   const isExpanded = isPinned || isHovered;
 
+  const toggleMenu = (name: string) => {
+    setOpenMenus(prev => ({ ...prev, [name]: !prev[name] }));
+  };
+
   const navItems = [
     { name: 'Özet', href: '/dashboard', icon: LayoutDashboard }, 
-    { name: 'Slider', href: '/dashboard/slider', icon: Box }, 
+    { 
+      name: 'Web Tasarım', 
+      icon: LayoutTemplate,
+      children: [
+        { name: 'Slider', href: '/dashboard/slider' },
+      ]
+    },
     { name: 'Hizmetler', href: '/dashboard/services', icon: Receipt }, 
     { name: 'Çözümler', href: '/dashboard/solutions', icon: Sparkles }, 
     { name: 'Blog', href: '/dashboard/blog', icon: Users }, 
@@ -87,10 +98,51 @@ export default function DashboardLayout({
 
         <nav className={styles.nav}>
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const hasChildren = !!item.children;
+            const isActive = item.href ? pathname === item.href : item.children?.some(c => pathname === c.href);
+            const isOpen = openMenus[item.name] || isActive;
             const Icon = item.icon;
+
+            if (hasChildren) {
+              return (
+                <div key={item.name} className={styles.navGroup}>
+                  <div 
+                    className={isActive ? styles.navItemActive : styles.navItem} 
+                    style={{cursor: 'pointer'}}
+                    onClick={() => {
+                      if (!isExpanded) setIsPinned(true);
+                      toggleMenu(item.name);
+                    }}
+                  >
+                    <div className={styles.navIcon}>
+                      <Icon size={20} strokeWidth={isActive ? 2 : 1.5} />
+                    </div>
+                    {isExpanded && (
+                      <>
+                        <span className={styles.navText}>{item.name}</span>
+                        <div style={{marginLeft: 'auto', marginRight: '1rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0)'}}>
+                          <ChevronRight size={14} />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  
+                  {isExpanded && isOpen && (
+                    <div className={styles.subNav}>
+                      {item.children!.map(child => (
+                        <Link key={child.name} href={child.href} className={pathname === child.href ? styles.subNavItemActive : styles.subNavItem}>
+                          <div className={styles.subNavBullet} />
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
-              <Link key={item.name} href={item.href} className={isActive ? styles.navItemActive : styles.navItem}>
+              <Link key={item.name} href={item.href!} className={isActive ? styles.navItemActive : styles.navItem}>
                 <div className={styles.navIcon}>
                   <Icon size={20} strokeWidth={isActive ? 2 : 1.5} />
                 </div>
