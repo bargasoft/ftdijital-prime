@@ -46,9 +46,9 @@ export default function DashboardLayout({
       icon: LayoutTemplate,
       children: [
         { name: 'Slider', href: '/dashboard/slider' },
+        { name: 'Site Ayarları', href: '/dashboard/settings' },
       ]
-    },
-    { name: 'Ayarlar', href: '/dashboard/settings', icon: Paintbrush }, 
+    }
   ];
 
   return (
