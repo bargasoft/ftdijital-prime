@@ -23,38 +23,48 @@ export default function HomeClient({
   // Modül Render Fonksiyonu
   const renderModule = (moduleName: string) => {
     switch (moduleName) {
-      case 'slider':
+      case 'slider': {
+        const hasImage = !!sliderData?.imageUrl;
         return (
-          <section key="slider" className={styles.hero}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <div style={{ marginBottom: '2rem', padding: '0.5rem 1rem', background: 'rgba(14, 165, 233, 0.1)', color: '#0ea5e9', borderRadius: '9999px', fontWeight: '600', fontSize: '0.875rem' }}>
-                ✨ FT Dijital Prime Yayında
-              </div>
-              
-              <h1 className={styles.title}>
-                {sliderData ? sliderData.title : "Geleceğin İşletmelerini Yeniden İnşa Ediyoruz"}
-              </h1>
-              <p className={styles.subtitle}>
-                {sliderData?.subtitle || "Logo Yazılım ürünleriyle dijital dönüşümünüzü hızlandırın, küresel standartlarda operasyonel mükemmelliğe ulaşın."}
-              </p>
-              
-              <div className={styles.buttonGroup}>
-                <button className={styles.primaryButton}>
-                  {sliderData?.btnText || "Hemen Başlayın"}
-                  <ArrowRight size={20} />
-                </button>
-                <button className={styles.secondaryButton}>
-                  Referanslarımızı İnceleyin
-                </button>
-              </div>
-            </motion.div>
+          <section 
+            key={moduleName}
+            style={{
+              background: hasImage ? `url(${sliderData.imageUrl}) center/cover no-repeat` : 'linear-gradient(135deg, #0ea5e9, #8b5cf6)',
+              color: 'white', 
+              padding: '8rem 1rem', 
+              textAlign: 'center',
+              position: 'relative'
+            }}
+          >
+            {hasImage && <div style={{position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 0}}></div>}
+            <div style={{position: 'relative', zIndex: 1, maxWidth: '800px', margin: '0 auto'}}>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{fontSize: '3.5rem', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2}}
+              >
+                {sliderData?.title || 'FT Dijital Prime'}
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                style={{fontSize: '1.25rem', opacity: 0.9, marginBottom: '2.5rem'}}
+              >
+                {sliderData?.subtitle || 'Geleceğin işletmelerini yeniden inşa ediyoruz. Dijital dönüşüm ve yazılım çözümlerinde güvenilir iş ortağınız.'}
+              </motion.p>
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                style={{background: 'white', color: '#0ea5e9', border: 'none', padding: '1rem 2.5rem', borderRadius: '9999px', fontSize: '1.1rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'}}
+              >
+                {sliderData?.btnText || 'Projelerimizi İnceleyin'}
+              </motion.button>
+            </div>
           </section>
         );
+      }
         
       case 'services':
         return (

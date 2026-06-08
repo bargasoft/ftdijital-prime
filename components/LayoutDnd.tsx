@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { GripVertical, Save } from 'lucide-react';
-import { updateSettings } from '../../settings/actions'; // Reuse actions
+import { updateSettings } from '@/app/(admin)/dashboard/settings/actions'; // Reuse actions
 
 export default function LayoutDnd({ initialLayout }: { initialLayout: string[] }) {
   const [items, setItems] = useState<string[]>(initialLayout.length > 0 ? initialLayout : ['slider', 'services', 'solutions']);

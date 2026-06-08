@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import prisma from '@/lib/db';
 
-export default function Footer({ 
+export default async function Footer({ 
   siteLogo, 
   primaryColor,
   phone,
@@ -21,6 +22,13 @@ export default function Footer({
   footerTheme?: string,
   footerColumns?: string
 }) {
+
+  // Fetch dynamic footer menu
+  const footerMenu = await prisma.menu.findUnique({ 
+    where: { name: 'footer' }, 
+    include: { items: { orderBy: { order: 'asc' } } } 
+  });
+  const footerItems = footerMenu?.items || [];
 
   const getThemeStyles = () => {
     switch (footerTheme) {
@@ -61,10 +69,16 @@ export default function Footer({
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            <div style={{width: '32px', height: '32px', borderRadius: '8px', background: footerTheme === 'colored' ? 'white' : (primaryColor || '#0ea5e9'), color: footerTheme === 'colored' ? (primaryColor || '#0ea5e9') : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem'}}>
-              {siteLogo ? siteLogo.charAt(0) : 'F'}
-            </div>
-            {siteLogo || 'FT Dijital Prime'}
+            {siteLogo && siteLogo.startsWith('http') ? (
+              <img src={siteLogo} alt="Logo" style={{ height: '40px', objectFit: 'contain' }} />
+            ) : (
+              <>
+                <div style={{width: '32px', height: '32px', borderRadius: '8px', background: footerTheme === 'colored' ? 'white' : (primaryColor || '#0ea5e9'), color: footerTheme === 'colored' ? (primaryColor || '#0ea5e9') : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem'}}>
+                  {siteLogo ? siteLogo.charAt(0) : 'F'}
+                </div>
+                {siteLogo || 'FT Dijital Prime'}
+              </>
+            )}
           </div>
           <p style={{fontSize: '0.9rem', lineHeight: 1.6}}>
             Geleceğin işletmelerini yeniden inşa ediyoruz. Dijital dönüşüm ve yazılım çözümlerinde güvenilir iş ortağınız.
@@ -82,13 +96,19 @@ export default function Footer({
         </div>
 
         {/* Hızlı Linkler */}
-        <div>
-          <h4 style={{color: theme.title, marginBottom: '1rem', fontSize: '1.1rem'}}>Bağlantılar</h4>
-          <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem'}}>
-            <li><Link href="/" style={{color: 'inherit', textDecoration: 'none'}}>Anasayfa</Link></li>
-            <li><Link href="#hizmetler" style={{color: 'inherit', textDecoration: 'none'}}>Hizmetlerimiz</Link></li>
-            <li><Link href="#cozumler" style={{color: 'inherit', textDecoration: 'none'}}>Çözümler</Link></li>
-            <li><Link href="/blog" style={{color: 'inherit', textDecoration: 'none'}}>Blog</Link></li>
+        <div style={{flex: 1}}>
+          <h4 style={{fontSize: '1.2rem', fontWeight: 600, color: theme.title, marginBottom: '1.5rem'}}>Hızlı Linkler</h4>
+          <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+            {footerItems.length > 0 ? footerItems.map(item => (
+              <li key={item.id}><Link href={item.url} style={{color: theme.text, textDecoration: 'none', transition: 'color 0.2s', fontSize: '0.95rem'}}>{item.label}</Link></li>
+            )) : (
+              <>
+                <li><Link href="/" style={{color: theme.text, textDecoration: 'none', transition: 'color 0.2s', fontSize: '0.95rem'}}>Anasayfa</Link></li>
+                <li><Link href="#hizmetler" style={{color: theme.text, textDecoration: 'none', transition: 'color 0.2s', fontSize: '0.95rem'}}>Hizmetlerimiz</Link></li>
+                <li><Link href="#cozumler" style={{color: theme.text, textDecoration: 'none', transition: 'color 0.2s', fontSize: '0.95rem'}}>Çözümlerimiz</Link></li>
+                <li><Link href="/blog" style={{color: theme.text, textDecoration: 'none', transition: 'color 0.2s', fontSize: '0.95rem'}}>Blog</Link></li>
+              </>
+            )}
           </ul>
         </div>
 

@@ -7,13 +7,16 @@ export async function addSlider(formData: FormData) {
   const title = formData.get('title') as string;
   const subtitle = formData.get('subtitle') as string;
   const btnText = formData.get('btnText') as string;
-  
+  const imageUrl = formData.get('imageUrl') as string;
+
+  if (!title) return;
+
   await prisma.slider.create({
     data: {
       title,
       subtitle,
       btnText,
-      bgGradient: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)'
+      imageUrl
     }
   });
 

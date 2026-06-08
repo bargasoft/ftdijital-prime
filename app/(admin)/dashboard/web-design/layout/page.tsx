@@ -1,6 +1,6 @@
 import { getSettings } from '../../settings/actions';
 import { ArrowUpDown } from 'lucide-react';
-import styles from '../../../dashboard.module.css';
+import styles from '../../dashboard.module.css';
 import LayoutDnd from '@/components/LayoutDnd';
 
 export default async function LayoutDesignPage() {

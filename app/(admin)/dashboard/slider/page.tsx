@@ -17,6 +17,7 @@ export default async function SliderPage() {
           <input name="title" placeholder="Ana Başlık (Örn: Geleceği İnşa Ediyoruz)" required style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
           <input name="subtitle" placeholder="Alt Başlık" style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
           <input name="btnText" placeholder="Buton Metni (Örn: Hemen İncele)" style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+          <input name="imageUrl" placeholder="Arkaplan Resim URL (https://...)" style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
           <button type="submit" className={styles.gradientButton} style={{ width: 'fit-content' }}>Slayt Ekle</button>
         </form>
       </div>

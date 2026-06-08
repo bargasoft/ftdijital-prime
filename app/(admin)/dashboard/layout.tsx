@@ -6,7 +6,7 @@ import styles from './dashboard.module.css';
 import { 
   LayoutDashboard, Box, Receipt, Sparkles, Users, Paintbrush, 
   Search, ChevronRight, ChevronLeft, User, LogOut, Bot, Store, 
-  Globe, HeadphonesIcon, Bell, LayoutGrid, LayoutTemplate, Briefcase
+  Globe, HeadphonesIcon, Bell, LayoutGrid, LayoutTemplate, Briefcase, FileText
 } from 'lucide-react';
 
 export default function DashboardLayout({
@@ -42,16 +42,30 @@ export default function DashboardLayout({
       ]
     },
     { 
-      name: 'Web Tasarım', 
-      icon: LayoutTemplate,
+      name: 'İçerik Yönetimi', 
+      icon: FileText,
       children: [
-        { name: 'Sayfa Düzeni', href: '/dashboard/web-design/layout' },
-        { name: 'Header Tasarımı', href: '/dashboard/web-design/header' },
-        { name: 'Footer Tasarımı', href: '/dashboard/web-design/footer' },
+        { name: 'Sayfalar', href: '/dashboard/pages' },
         { name: 'Slider', href: '/dashboard/slider' },
       ]
     },
-    { name: 'Ayarlar', href: '/dashboard/settings', icon: Paintbrush }, 
+    { 
+      name: 'Web Tasarım', 
+      icon: LayoutTemplate,
+      children: [
+        { name: 'Menüler', href: '/dashboard/menus' },
+        { name: 'Sayfa Düzeni', href: '/dashboard/web-design/layout' },
+        { name: 'Header Tasarımı', href: '/dashboard/web-design/header' },
+        { name: 'Footer Tasarımı', href: '/dashboard/web-design/footer' },
+      ]
+    },
+    { 
+      name: 'Ayarlar', 
+      icon: Paintbrush,
+      children: [
+        { name: 'Firma Ayarları', href: '/dashboard/settings/company' },
+      ]
+    }, 
   ];
 
   return (
@@ -102,9 +116,9 @@ export default function DashboardLayout({
 
         <div className={styles.sidebarLogo}>
           {isExpanded ? (
-             <div style={{fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-1px'}}>FT Dijital</div>
+             <img src="https://www.ftdijital.com/Content/assets/images/logo/ft_dijital_logo.png" alt="FT Dijital" style={{height: '35px', objectFit: 'contain'}} />
           ) : (
-             <div style={{fontWeight: 900, fontSize: '1.2rem'}}>FT</div>
+             <img src="https://www.ftdijital.com/Content/assets/images/logo/ft_dijital_logo.png" alt="FT Dijital" style={{height: '24px', objectFit: 'cover', width: '24px', objectPosition: 'left'}} />
           )}
         </div>
 
@@ -162,6 +176,8 @@ export default function DashboardLayout({
               </Link>
             );
           })}
+
+
         </nav>
 
         {/* User Profile Area */}
@@ -172,7 +188,7 @@ export default function DashboardLayout({
               <User size={18} className={styles.bottomIcon} strokeWidth={1.5} />
               <LogOut size={18} className={styles.bottomIcon} strokeWidth={1.5} />
               <div className={styles.versionText}>
-                0.18.00.1<br/>8.13.716.0
+                v1.0.0<br/>BarGa Soft
               </div>
             </>
           )}

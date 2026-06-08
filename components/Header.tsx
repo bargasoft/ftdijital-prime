@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import prisma from '@/lib/db';
 
-export default function Header({ 
+export default async function Header({ 
   siteLogo, 
   primaryColor,
   headerLogoAlign = 'left',
@@ -13,6 +14,12 @@ export default function Header({
   headerMenuStyle?: string,
   headerBgStyle?: string
 }) {
+  // Fetch dynamic menu
+  const menu = await prisma.menu.findUnique({ 
+    where: { name: 'header' }, 
+    include: { items: { orderBy: { order: 'asc' } } } 
+  });
+  const menuItems = menu?.items || [];
 
   const getBgStyle = () => {
     switch (headerBgStyle) {
@@ -53,10 +60,16 @@ export default function Header({
           left: headerLogoAlign === 'center' ? '50%' : 'auto',
           transform: headerLogoAlign === 'center' ? 'translateX(-50%)' : 'none'
         }}>
-          <div style={{width: '32px', height: '32px', borderRadius: '8px', background: primaryColor || '#0ea5e9', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem'}}>
-            {siteLogo ? siteLogo.charAt(0) : 'F'}
-          </div>
-          {siteLogo || 'FT Dijital Prime'}
+          {siteLogo && siteLogo.startsWith('http') ? (
+            <img src={siteLogo} alt="Logo" style={{ height: '40px', objectFit: 'contain' }} />
+          ) : (
+            <>
+              <div style={{width: '32px', height: '32px', borderRadius: '8px', background: primaryColor || '#0ea5e9', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem'}}>
+                {siteLogo ? siteLogo.charAt(0) : 'F'}
+              </div>
+              {siteLogo || 'FT Dijital Prime'}
+            </>
+          )}
         </Link>
 
         {/* Ortadaki Linkler */}
@@ -68,10 +81,11 @@ export default function Header({
         }}>
           {headerLogoAlign !== 'center' && (
             <>
-              <Link href="/" style={{textDecoration: 'none', color: '#334155', fontWeight: headerMenuStyle === 'mega' ? 700 : 500, fontSize: '0.9rem'}}>Anasayfa</Link>
-              <Link href="#hizmetler" style={{textDecoration: 'none', color: '#334155', fontWeight: headerMenuStyle === 'mega' ? 700 : 500, fontSize: '0.9rem'}}>Hizmetler {headerMenuStyle === 'mega' && '▼'}</Link>
-              <Link href="#cozumler" style={{textDecoration: 'none', color: '#334155', fontWeight: headerMenuStyle === 'mega' ? 700 : 500, fontSize: '0.9rem'}}>Çözümler</Link>
-              <Link href="/blog" style={{textDecoration: 'none', color: '#334155', fontWeight: headerMenuStyle === 'mega' ? 700 : 500, fontSize: '0.9rem'}}>Blog</Link>
+              {menuItems.map(item => (
+                <Link key={item.id} href={item.url} style={{textDecoration: 'none', color: '#334155', fontWeight: headerMenuStyle === 'mega' ? 700 : 500, fontSize: '0.9rem'}}>
+                  {item.label}
+                </Link>
+              ))}
               
               <div>
                 <Link href="#iletisim" style={{
@@ -95,12 +109,14 @@ export default function Header({
         {headerLogoAlign === 'center' && (
            <div style={{display: 'flex', gap: '2rem', width: '100%', justifyContent: 'space-between', alignItems: 'center'}}>
              <nav style={{display: 'flex', gap: '2rem'}}>
-                <Link href="/" style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>Anasayfa</Link>
-                <Link href="#hizmetler" style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>Hizmetler</Link>
+                {menuItems.slice(0, Math.ceil(menuItems.length / 2)).map(item => (
+                  <Link key={item.id} href={item.url} style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>{item.label}</Link>
+                ))}
              </nav>
              <nav style={{display: 'flex', gap: '2rem', alignItems: 'center'}}>
-                <Link href="#cozumler" style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>Çözümler</Link>
-                <Link href="/blog" style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>Blog</Link>
+                {menuItems.slice(Math.ceil(menuItems.length / 2)).map(item => (
+                  <Link key={item.id} href={item.url} style={{textDecoration: 'none', color: '#334155', fontWeight: 500, fontSize: '0.9rem'}}>{item.label}</Link>
+                ))}
              </nav>
            </div>
         )}

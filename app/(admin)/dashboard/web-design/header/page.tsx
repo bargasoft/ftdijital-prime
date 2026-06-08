@@ -1,6 +1,6 @@
 import { getSettings, updateSettings } from '../../settings/actions';
 import { LayoutTemplate, Save } from 'lucide-react';
-import styles from '../../../dashboard.module.css';
+import styles from '../../dashboard.module.css';
 
 export default async function HeaderDesignPage() {
   const settings = await getSettings();

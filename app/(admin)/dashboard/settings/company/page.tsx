@@ -1,6 +1,6 @@
-import { getSettings, updateSettings } from './actions';
+import { getSettings, updateSettings } from '../actions';
 import { Save, Settings, Palette, Phone } from 'lucide-react';
-import styles from '../dashboard.module.css';
+import styles from '../../dashboard.module.css';
 
 export default async function SettingsPage() {
   const settings = await getSettings();

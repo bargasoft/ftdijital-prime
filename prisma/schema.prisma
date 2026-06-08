@@ -20,7 +20,45 @@ model Slider {
   btnText    String?
   btnLink    String?
   bgGradient String?
+  imageUrl   String? // Yeni eklenen resim URL alanı
   order      Int    @default(0)
+}
+
+model Menu {
+  id        String     @id @default(cuid())
+  name      String     @unique // Örn: 'header', 'footer'
+  items     MenuItem[]
+  createdAt DateTime   @default(now())
+}
+
+model MenuItem {
+  id        String   @id @default(cuid())
+  label     String
+  url       String
+  order     Int      @default(0)
+  parentId  String?  // Alt menüler için
+  menuId    String
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+}
+
+model Page {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Widget {
+  id        String   @id @default(cuid())
+  area      String   // Örn: 'footer_col_1', 'home_body'
+  type      String   // Örn: 'text', 'html', 'menu'
+  title     String?
+  content   String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
 }
 
 model Service {

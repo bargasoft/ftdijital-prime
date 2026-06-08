@@ -1,6 +1,6 @@
 import { getSettings, updateSettings } from '../../settings/actions';
 import { PanelBottom, Save } from 'lucide-react';
-import styles from '../../../dashboard.module.css';
+import styles from '../../dashboard.module.css';
 
 export default async function FooterDesignPage() {
   const settings = await getSettings();
