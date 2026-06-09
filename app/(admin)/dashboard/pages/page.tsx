@@ -2,6 +2,7 @@ import prisma from '@/lib/db';
 import styles from '../dashboard.module.css';
 import { addPage, deletePage } from './actions';
 import { FileText, Save, Trash2 } from 'lucide-react';
+import RichTextEditor from '@/components/RichTextEditor';
 
 export default async function PagesManager() {
   const pages = await prisma.page.findMany({ orderBy: { createdAt: 'desc' } });
@@ -35,7 +36,7 @@ export default async function PagesManager() {
 
             <div className={styles.formGroup}>
               <label>İçerik (Metin / HTML)</label>
-              <textarea name="content" required placeholder="Sayfa içeriğinizi buraya yazabilirsiniz..." rows={12} style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', resize: 'vertical', width: '100%', fontFamily: 'inherit' }}></textarea>
+              <RichTextEditor name="content" placeholder="Sayfa içeriğinizi buraya yazabilirsiniz..." />
             </div>
 
             <button type="submit" className={styles.gradientButton} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>

@@ -69,12 +69,22 @@ model Service {
   order       Int    @default(0)
 }
 
+model SolutionCategory {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  order     Int        @default(0)
+  isActive  Boolean    @default(true)
+  solutions Solution[]
+}
+
 model Solution {
-  id       String @id @default(cuid())
-  title    String
-  category String
-  items    String
-  order    Int    @default(0)
+  id         String  @id @default(cuid())
+  title      String
+  categoryId String
+  category   SolutionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  items      String
+  order      Int     @default(0)
+  isActive   Boolean @default(true)
 }
 
 model Blog {
@@ -97,11 +107,23 @@ model Message {
   isRead    Boolean  @default(false)
 }
 
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  permissions String   @default("[]") // JSON formatında saklayacağız: ["VIEW_TICKETS", "DELETE_TICKETS"]
+  isSystem    Boolean  @default(false)
+  users       User[]
+}
+
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
+  id       String  @id @default(cuid())
+  name     String  @default("İsimsiz Kullanıcı")
+  email    String  @unique
   password String
-  role     String @default("ADMIN")
+  roleId   String?
+  role     Role?   @relation(fields: [roleId], references: [id])
+  isActive Boolean @default(true)
 }
 
 model Customer {

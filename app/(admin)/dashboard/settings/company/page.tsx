@@ -25,9 +25,20 @@ export default async function SettingsPage() {
             <Palette size={18} /> Kurumsal Bilgiler
           </div>
           <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem'}}>
-            <div style={{gridColumn: '1 / -1'}}>
+            <div>
               <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#64748b'}}>Resmi Firma Adı / Logo Yazısı</label>
-              <input type="text" name="site_logo" defaultValue={settings.site_logo || 'FT Dijital Prime'} style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1'}} />
+              <input type="text" name="site_logo_text" defaultValue={settings.site_logo_text || 'FT Dijital Prime'} style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1'}} />
+            </div>
+            <div></div>
+            <div style={{border: '1px dashed #cbd5e1', padding: '1rem', borderRadius: '8px'}}>
+              <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#64748b'}}>Açık Tema Logosu (Koyu Renk) <span style={{fontSize: '0.7rem', background: '#e2e8f0', padding: '0.1rem 0.3rem', borderRadius: '4px'}}>Light Mode</span></label>
+              <input type="file" name="site_logo_light_mode" accept="image/*" style={{width: '100%'}} />
+              {settings.site_logo_light_mode && <div style={{marginTop: '0.5rem', fontSize: '0.8rem', color: '#10b981'}}>✓ Mevcut logo yüklü: <img src={settings.site_logo_light_mode} alt="logo" style={{height: '20px', verticalAlign: 'middle', marginLeft: '0.5rem'}}/></div>}
+            </div>
+            <div style={{border: '1px dashed #cbd5e1', padding: '1rem', borderRadius: '8px', background: '#1e293b', color: 'white'}}>
+              <label style={{display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem', color: '#94a3b8'}}>Koyu Tema Logosu (Açık Renk) <span style={{fontSize: '0.7rem', background: '#334155', padding: '0.1rem 0.3rem', borderRadius: '4px'}}>Dark Mode</span></label>
+              <input type="file" name="site_logo_dark_mode" accept="image/*" style={{width: '100%', color: 'white'}} />
+              {settings.site_logo_dark_mode && <div style={{marginTop: '0.5rem', fontSize: '0.8rem', color: '#34d399'}}>✓ Mevcut logo yüklü: <img src={settings.site_logo_dark_mode} alt="logo" style={{height: '20px', verticalAlign: 'middle', marginLeft: '0.5rem'}}/></div>}
             </div>
           </div>
         </div>
